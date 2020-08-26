@@ -82,6 +82,8 @@ public class MechanicsManager {
 
     public static void registerListeners(JavaPlugin plugin, Listener... listeners) {
         for (Listener listener : listeners) {
+            if (MECHANICS_LISTENERS.contains(listener))
+                continue;
             Bukkit.getPluginManager().registerEvents(listener, plugin);
             MECHANICS_LISTENERS.add(listener);
         }
@@ -90,6 +92,7 @@ public class MechanicsManager {
     public static void unloadListeners() {
         for (Listener listener : MECHANICS_LISTENERS)
             HandlerList.unregisterAll(listener);
+        MECHANICS_LISTENERS.clear();
     }
 
     public static MechanicFactory getMechanicFactory(String mechanicID) {
